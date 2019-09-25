@@ -23,7 +23,7 @@ After this you will need to authorize your ServicePrincipal to "Read and write y
 
 
 * Supported functions
-  Get-AADB2CPolicy
-  New-AADB2CPolicy
-  Remove-AADB2CPolicy
+  - Get-AADB2CPolicy
+  - New-AADB2CPolicy
+  - Remove-AADB2CPolicy
 
