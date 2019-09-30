@@ -143,9 +143,7 @@ function New-AADB2CPolicy {
         }
 
     #Check if exists
-    $Result = $Null
     if ($PolicyID) {
-        
         if ($Result) {
             if ($Overwrite) {
                 if ($pscmdlet.ShouldProcess("policy")) {
