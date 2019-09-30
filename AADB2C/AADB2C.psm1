@@ -56,11 +56,11 @@ Function Get-AADB2CPolicy {
 
     #Get Token
     $Body = @{client_id = $ClientID; client_secret = $ClientSecret; grant_type = "client_credentials"; scope = "https://graph.microsoft.com/.default"; }
-    $OAuthReq = Invoke-RestMethod -Method Post -Uri https://login.microsoftonline.com/$TenantId/oauth2/v2.0/token -Body $Body
+    $OAuthReq = Invoke-RestMethod -Method Post -Uri "https://login.microsoftonline.com/$TenantId/oauth2/v2.0/token" -Body $Body
     $AccessToken = $OAuthReq.access_token
 
     #Get Policies
-    $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -Uri  https://graph.microsoft.com/beta/trustFramework/policies -Method Get
+    $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -Uri "https://graph.microsoft.com/beta/trustFramework/policies" -Method Get
 
 
     #Retun
@@ -124,7 +124,7 @@ function New-AADB2CPolicy {
 
     #Get Token
     $Body = @{client_id = $ClientID; client_secret = $ClientSecret; grant_type = "client_credentials"; scope = "https://graph.microsoft.com/.default"; }
-    $OAuthReq = Invoke-RestMethod -Method Post -Uri https://login.microsoftonline.com/$TenantId/oauth2/v2.0/token -Body $Body
+    $OAuthReq = Invoke-RestMethod -Method Post -Uri "https://login.microsoftonline.com/$TenantId/oauth2/v2.0/token" -Body $Body
     $AccessToken = $OAuthReq.access_token
 
     #Get Policy Content
@@ -138,18 +138,14 @@ function New-AADB2CPolicy {
     #Check if exists
     $Result = $Null
     if ($PolicyID) {
-        $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -Uri  https://graph.microsoft.com/beta/trustFramework/policies/$PolicyID -Method Get
+        $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -Uri "https://graph.microsoft.com/beta/trustFramework/policies/$PolicyID" -Method Get
 
         if ($Result.id) {
             if ($Overwrite) {
                 if ($pscmdlet.ShouldProcess("policy")) {
         
                     #Update existing policy
-                    $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" }`
-                        -ContentType "application/xml"`
-                        -Method PUT`
-                        -Body $Policy`
-                        -Uri  ('https://graph.microsoft.com/beta/trustFramework/policies/'+$Result.id+'/$value')
+                    $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -ContentType "application/xml" -Method PUT -Body $Policy -Uri ('https://graph.microsoft.com/beta/trustFramework/policies/'+$Result.id+'/$value')
                 }
             }
             else {
@@ -159,11 +155,7 @@ function New-AADB2CPolicy {
         else {
             if ($pscmdlet.ShouldProcess("policy")) {
                 #Upload Policy
-                $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" }`
-                    -ContentType "application/xml"`
-                    -Method Post`
-                    -Body $Policy`
-                    -Uri  https://graph.microsoft.com/beta/trustFramework/policies
+                $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -ContentType "application/xml" -Method Post -Body $Policy -Uri "https://graph.microsoft.com/beta/trustFramework/policies"
             }
         }
     }
@@ -219,7 +211,7 @@ function Remove-AADB2CPolicy {
 
     #Get Token
     $Body = @{client_id = $ClientID; client_secret = $ClientSecret; grant_type = "client_credentials"; scope = "https://graph.microsoft.com/.default"; }
-    $OAuthReq = Invoke-RestMethod -Method Post -Uri https://login.microsoftonline.com/$TenantId/oauth2/v2.0/token -Body $Body
+    $OAuthReq = Invoke-RestMethod -Method Post -Uri "https://login.microsoftonline.com/$TenantId/oauth2/v2.0/token" -Body $Body
     $AccessToken = $OAuthReq.access_token
 
     #Get Policy Content
@@ -233,18 +225,14 @@ function Remove-AADB2CPolicy {
     #Check if exists
     $Result = $Null
     if ($PolicyID) {
-        $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -Uri  https://graph.microsoft.com/beta/trustFramework/policies/$PolicyID -Method Get
+        $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -Uri "https://graph.microsoft.com/beta/trustFramework/policies/$PolicyID" -Method Get
 
         if ($Result.id) {
             if ($Overwrite) {
                 if ($pscmdlet.ShouldProcess("policy")) {
         
                     #Update existing policy
-                    $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" }`
-                        -ContentType "application/xml"`
-                        -Method PUT`
-                        -Body $Policy`
-                        -Uri  ('https://graph.microsoft.com/beta/trustFramework/policies/'+$Result.id+'/$value')
+                    $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -ContentType "application/xml" -Method PUT -Body $Policy -Uri  ('https://graph.microsoft.com/beta/trustFramework/policies/'+$Result.id+'/$value')
                 }
             }
             else {
@@ -254,11 +242,7 @@ function Remove-AADB2CPolicy {
         else {
             if ($pscmdlet.ShouldProcess("policy")) {
                 #Upload Policy
-                $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" }`
-                    -ContentType "application/xml"`
-                    -Method Post`
-                    -Body $Policy`
-                    -Uri  https://graph.microsoft.com/beta/trustFramework/policies
+                $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -ContentType "application/xml" -Method Post -Body $Policy -Uri "https://graph.microsoft.com/beta/trustFramework/policies"
             }
         }
     }
