@@ -135,12 +135,18 @@ function New-AADB2CPolicy {
 
     $PolicyID = $PolicyXML.TrustFrameworkPolicy.PolicyId
 
+    #Check for existing policy
+    $Results = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -Uri "https://graph.microsoft.com/beta/trustFramework/policies" -Method Get
+    $Result = $Null
+    if ($Results) {
+        $Result = $Results | Where-Object {$_.id -eq $PolicyID}
+        }
+
     #Check if exists
     $Result = $Null
     if ($PolicyID) {
-        $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -Uri "https://graph.microsoft.com/beta/trustFramework/policies/$PolicyID" -Method Get
-
-        if ($Result.id) {
+        
+        if ($Result) {
             if ($Overwrite) {
                 if ($pscmdlet.ShouldProcess("policy")) {
         
