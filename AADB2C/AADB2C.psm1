@@ -165,7 +165,7 @@ function New-AADB2CPolicy {
         }
     }
     else {
-        Write-Error "Policy File: $FilePat invallid."
+        Write-Error "Policy File: $FilePath invalid."
     }
 }
 
@@ -252,6 +252,6 @@ function Remove-AADB2CPolicy {
         }
     }
     else {
-        Write-Error "Policy File: $FilePat invallid."
+        Write-Error "Policy File: $FilePath invalid."
     }
 }
