@@ -150,7 +150,7 @@ function New-AADB2CPolicy {
                 if ($pscmdlet.ShouldProcess("policy")) {
         
                     #Update existing policy
-                    $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -ContentType "application/xml" -Method PUT -Body $Policy -Uri ('https://graph.microsoft.com/beta/trustFramework/policies/'+$PolicyID+'/$value')
+                    $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -ContentType "application/xml" -Method PUT -Body ([System.Text.Encoding]::UTF8.GetBytes($Policy)) -Uri ('https://graph.microsoft.com/beta/trustFramework/policies/'+$PolicyID+'/$value')
                 }
             }
             else {
@@ -160,7 +160,7 @@ function New-AADB2CPolicy {
         else {
             if ($pscmdlet.ShouldProcess("policy")) {
                 #Upload Policy
-                $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -ContentType "application/xml" -Method Post -Body $Policy -Uri "https://graph.microsoft.com/beta/trustFramework/policies"
+                $Result = Invoke-RestMethod -Headers @{Authorization = "Bearer $AccessToken" } -ContentType "application/xml" -Method Post -Body ([System.Text.Encoding]::UTF8.GetBytes($Policy)) -Uri "https://graph.microsoft.com/beta/trustFramework/policies"
             }
         }
     }
