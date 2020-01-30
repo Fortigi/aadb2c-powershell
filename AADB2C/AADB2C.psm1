@@ -129,8 +129,8 @@ function New-AADB2CPolicy {
 
     #Get Policy Content
     if ($FilePath) {
-        $Policy = (Get-Content -Path $FilePath -Encoding UTF8) -join "`n"
-        [xml]$PolicyXML = (Get-Content -Path $FilePath -Encoding UTF8) -join "`n"
+        $Policy = (Get-Content -Path $FilePath -Encoding UTF8 -Raw)
+        [xml]$PolicyXML = (Get-Content -Path $FilePath -Encoding UTF8 -Raw)
     }
 
     $PolicyID = $PolicyXML.TrustFrameworkPolicy.PolicyId
@@ -221,8 +221,8 @@ function Remove-AADB2CPolicy {
 
     #Get Policy Content
     if ($FilePath) {
-        $Policy = (Get-Content -Path $FilePath -Encoding UTF8) -join "`n"
-        [xml]$PolicyXML = (Get-Content -Path $FilePath -Encoding UTF8) -join "`n"
+        $Policy = (Get-Content -Path $FilePath -Encoding UTF8 -Raw)
+        [xml]$PolicyXML = (Get-Content -Path $FilePath -Encoding UTF8 -Raw)
     }
 
     $PolicyID = $PolicyXML.TrustFrameworkPolicy.PolicyId
